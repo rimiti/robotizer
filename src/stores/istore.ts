@@ -1,4 +1,4 @@
-interface IStore {
+export default interface IStore {
   /**
    * @description Authentication.
    * @returns {Promise<boolean>}
