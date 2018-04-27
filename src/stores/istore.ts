@@ -1,9 +1,10 @@
 export default interface IStore {
   /**
    * @description Authentication.
+   * @param {{}} credentials
    * @returns {Promise<boolean>}
    */
-  login(configuration: {}): Promise<boolean>;
+  login(credentials?: {}): Promise<boolean>;
 
   /**
    * @description Retrieve file.
