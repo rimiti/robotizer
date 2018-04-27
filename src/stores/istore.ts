@@ -10,5 +10,5 @@ export default interface IStore {
    * @description Save file on store.
    * @returns {Promise<boolean>}
    */
-  save(content: string, options?: object): Promise<boolean>;
+  save(content: string, options?: object): Promise<void>;
 }
