@@ -1,1 +1,4 @@
-export * from './classes/parser';
+import Parser from './classes/parser';
+
+export default Parser;
+
