@@ -24,3 +24,19 @@ test("Should return true", (t) => {
 test("Should return false", (t) => {
   t.is(Utils.isSitemap("Sitmap: https://dimsolution.com/sitemap.xml"), false);
 });
+
+test("Should return first string item'", (t) => {
+  t.throws(() => Utils.explode("Sitemap https://dimsolution.com/sitemap.xml"));
+});
+
+test("Should return first string item'", (t) => {
+  t.is(Utils.first("Sitemap: https://dimsolution.com/sitemap.xml"), "Sitemap");
+});
+
+test("Should return last item '", (t) => {
+  t.is(Utils.last("Sitemap: https://dimsolution.com/sitemap.xml"), "https://dimsolution.com/sitemap.xml");
+});
+
+test("Should return last item '", (t) => {
+  t.is(Utils.last("Sitemap:https://dimsolution.com/sitemap.xml"), "https://dimsolution.com/sitemap.xml");
+});
