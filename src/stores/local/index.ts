@@ -1,4 +1,4 @@
-import fs from "fs";
+import * as fs from "fs";
 import IStore from "../istore";
 
 export class Local implements IStore {
