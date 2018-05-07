@@ -17,4 +17,13 @@ export default class Utils {
   public static isDisallow(data: string): boolean {
     return /^Disallow$/i.test(data);
   }
+
+  /**
+   * @description Check if is sitemap.
+   * @param {string} data
+   * @returns {boolean}
+   */
+  public static isSitemap(data: string): boolean {
+    return /^Sitemap/i.test(data);
+  }
 }
