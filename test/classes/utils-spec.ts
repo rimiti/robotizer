@@ -14,7 +14,7 @@ test("Should return true", (t) => {
 });
 
 test("Should return false", (t) => {
-  t.is(Utils.isDisallow("Disallow: /ws/"), false);
+  t.is(Utils.isDisallow("Disalow: /ws/"), false);
 });
 
 test("Should return true", (t) => {
@@ -22,5 +22,5 @@ test("Should return true", (t) => {
 });
 
 test("Should return false", (t) => {
-  t.is(Utils.isSitemap("Sitemap: https://dimsolution.com/sitemap.xml"), false);
+  t.is(Utils.isSitemap("Sitmap: https://dimsolution.com/sitemap.xml"), false);
 });
