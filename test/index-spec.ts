@@ -1,6 +1,13 @@
 import test from "ava";
-import * as index from "../src";
+import Parser from "../src";
 
 test("Should have Parser available", t => {
+  t.truthy(true);
+});
+
+
+test("Should run test", t => {
+  const parser = new Parser();
+  parser.parse();
   t.truthy(true);
 });
