@@ -6,7 +6,7 @@ export default class Utils {
    * @returns {boolean}
    */
   public static isUserAgent(data: string): boolean {
-    return /^User-agent$/i.test(data);
+    return /^User-agent:/i.test(data);
   }
 
   /**
@@ -15,7 +15,7 @@ export default class Utils {
    * @returns {boolean}
    */
   public static isDisallow(data: string): boolean {
-    return /^Disallow$/i.test(data);
+    return /^Disallow:/i.test(data);
   }
 
   /**
@@ -24,6 +24,6 @@ export default class Utils {
    * @returns {boolean}
    */
   public static isSitemap(data: string): boolean {
-    return /^Sitemap/i.test(data);
+    return /^Sitemap:/i.test(data);
   }
 }
