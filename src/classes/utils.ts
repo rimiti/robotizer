@@ -42,7 +42,8 @@ export default class Utils {
    * @returns {string}
    */
   public static last(data: string): string {
-    return Utils.explode(data)[1];
+    const tmp = Utils.explode(data)[1];
+    return (tmp.charAt(0) === " ") ? tmp.slice(1, tmp.length) : tmp;
   }
 
   /**
@@ -51,6 +52,10 @@ export default class Utils {
    * @returns {string[]}
    */
   public static explode(data: string): string[] {
-    return data.split(/:(.+)/).slice(0, 2);
+    const tmp = data.split(/:(.+)/).slice(0, 2);
+    if (!/^(Sitemap|Disallow|User-agent)$/i.test(tmp[0])) {
+      throw new Error(`Error during explode, ':' missing after key: ${tmp[0]}`);
+    }
+    return tmp;
   }
 }
