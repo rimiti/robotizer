@@ -4,17 +4,14 @@ import Utils from "./utils";
 
 export default class Parser {
   private content: {
-    user_agent: {
+    user_agent?: [{
       name?: string,
       disallow?: [string],
-    },
+    }],
+    sitemap?: [string],
   } = {
-    user_agent: {},
+    // user_agent: {}
   };
-
-  constructor() {
-
-  }
 
   async getFile(url: string) {
     const file = fs.createWriteStream("/tmp/robots.txt");
@@ -39,7 +36,8 @@ export default class Parser {
       "Disallow: /500\n" +
       "Disallow: /api/\n" +
       "Disallow: /images/site3/logos-clients/\n" +
-      "Sitemap: https://www.clicrdv.com/fr/sitemap_index.xml";
+      "Sitemap: https://www.clicrdv.com/fr/sitemap_index1.xml\n" +
+      "Sitemap: https://www.clicrdv.com/fr/sitemap_index2.xml";
   }
 
   /**
@@ -47,21 +45,25 @@ export default class Parser {
    */
   parse(content = this.getContent()) {
     const tmp = content.split("\n");
+    let userAgentTmp = "";
     tmp.forEach((row, index) => {
-
       if (Utils.isUserAgent(row)) {
-        this.content.user_agent.name = Utils.first(row);
-      } else if (Utils.isDisallow(row)) {
+        userAgentTmp = row;
 
+        // if (Array.isArray(this.content.sitemap) && this.content.user_agent) {
+        //   this.content.user_agent[Utils.last(row)].push().name =
+        // } else {
+        //
+        // }
       } else if (Utils.isSitemap(row)) {
-        this.content.sitemap.name = Utils.first(row);
-
-      } else {
-        // throw new Error(`Unknown row type ${row}`);
+        if (Array.isArray(this.content.sitemap)) {
+          this.content.sitemap.push(Utils.last(row));
+        } else {
+          this.content.sitemap = [Utils.last(row)];
+        }
       }
     });
-    console.log(this.content);
-
+    console.log(JSON.stringify(this.content));
   }
 
   /**
