@@ -23,7 +23,7 @@
     "prepublishOnly": "npm run build",
     "prebuild": "npm run clean && npm run format && npm run lint && echo Using TypeScript && tsc --version",
     "build": "tsc --pretty && tsc -p tsconfig.test.json --pretty",
-    "test": "npm run clean && tsc -p tsconfig.test.json --pretty && nyc --exclude \"**/*-spec.js\" ava \"**/*-spec.js\" --verbose",
+    "test": "tsc -p tsconfig.test.json --pretty && nyc --exclude \"**/*-spec.js\" ava \"**/*-spec.js\" --verbose",
     "coverage": "nyc report --reporter=lcov --reporter=text --reporter=html",
     "watch": "npm run build -- --watch",
     "watch:test:ts": "tsc -p tsconfig.test.json --pretty --watch",
@@ -31,7 +31,9 @@
     "watch:test": "run-p watch:test:ts watch:test:ava"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "@types/lodash": "^4.14.109",
+    "axios": "^0.18.0",
+    "lodash": "^4.17.10"
   },
   "devDependencies": {
     "@types/node": "^8.0.0",
