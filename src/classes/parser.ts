@@ -106,6 +106,10 @@ export default class Parser {
         }
       });
     });
+
+    _.forEach(this.getObject().sitemaps, (url) => {
+      output += `Sitemap: ${url}\n`;
+    });
     return output;
   }
 }
