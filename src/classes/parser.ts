@@ -84,10 +84,7 @@ export default class Parser {
   public getObject() {
     const sorted = _.sortBy(this.content.rules, ["allow", "disallow"]);
     const ua = _.groupBy(sorted, "user_agent");
-    return {
-      ua,
-      sitemaps: this.content.sitemaps
-    };
+    return { ua, sitemaps: this.content.sitemaps };
   }
 
   /**
