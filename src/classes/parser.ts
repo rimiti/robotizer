@@ -50,11 +50,7 @@ export default class Parser {
       } else if (Utils.isDisallow(row)) {
         this.addDisallow(userAgent, Utils.last(row));
       } else if (Utils.isSitemap(row)) {
-        if (Array.isArray(this.content.sitemaps)) {
-          this.content.sitemaps.push(Utils.last(row));
-        } else {
-          this.content.sitemaps = [Utils.last(row)];
-        }
+        this.addSitemap(Utils.last(row));
       }
     });
     console.log(this.content);
@@ -65,12 +61,24 @@ export default class Parser {
    * @param {string} bot
    * @param {string} path
    */
-  addDisallow(bot: string, path: string): void {
+  public addDisallow(bot: string, path: string): void {
     const item = { disallow: path, user_agent: bot };
     if (Array.isArray(this.content.rules)) {
       this.content.rules.push(item);
     } else {
       this.content.rules = [item];
+    }
+  }
+
+  /**
+   * @description Add sitemap url.
+   * @param {string} url
+   */
+  public addSitemap(url: string): void {
+    if (Array.isArray(this.content.sitemaps)) {
+      this.content.sitemaps.push(url);
+    } else {
+      this.content.sitemaps = [url];
     }
   }
 
