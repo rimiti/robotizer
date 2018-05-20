@@ -19,6 +19,15 @@ export default class Utils {
   }
 
   /**
+   * @description Check if is allowed.
+   * @param {string} data
+   * @returns {boolean}
+   */
+  public static isAllow(data: string): boolean {
+    return /^Allow:/i.test(data);
+  }
+
+  /**
    * @description Check if is sitemap.
    * @param {string} data
    * @returns {boolean}
