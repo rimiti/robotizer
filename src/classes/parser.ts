@@ -19,7 +19,7 @@ export default class Parser {
       });
   }
 
-  getContent(): string {
+  getContentDemo(): string {
     return "User-Agent: *\n" +
       "Disallow: /map/\n" +
       "Disallow: /404\n" +
@@ -41,7 +41,7 @@ export default class Parser {
   /**
    * @description Parse existing and retrieving file.
    */
-  parse(content = this.getContent()) {
+  parse(content = this.getContentDemo()) {
     const tmp = content.split("\n");
     let userAgent = "";
     tmp.forEach((row, index) => {
@@ -90,10 +90,11 @@ export default class Parser {
   }
 
   /**
-   * @description Get object content.
+   * @description Get fromated object.
+   * @returns {{rules?: [{user_agent?: string; disallow?: string}]; sitemaps?: [string]}}
    */
-  getObjectContent() {
-
+  public getContent() {
+    return this.content;
   }
 
   /**
