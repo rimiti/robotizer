@@ -95,6 +95,21 @@ export default class Parser {
   }
 
   /**
+   * @description Returns plain text.
+   * @returns {string}
+   */
+  public getContent() {
+    let output: string = "";
+    _.forIn(this.getObject().user_agents, (rules, userAgent) => {
+      output += `User-Agent: ${userAgent}\n`;
+      _.mapValues(rules, (paths) => {
+        output += `Disallow: ${paths.disallow}\n`;
+      });
+    });
+    return output;
+  }
+
+  /**
    * @description Save content into specified store.
    * @param {string} store
    */
