@@ -1,5 +1,0 @@
-Sitemap: http://www.developpez.com/sitemap2.xml
-User-agent: *
-Disallow: /ws/
-Disallow: /telechargements/
-Disallow: /redirect/
