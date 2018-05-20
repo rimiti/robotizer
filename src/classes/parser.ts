@@ -1,5 +1,6 @@
 import Axios from "axios";
 import * as fs from "fs";
+import * as _ from "lodash";
 import Utils from "./utils";
 
 export default class Parser {
@@ -53,7 +54,7 @@ export default class Parser {
         this.addSitemap(Utils.last(row));
       }
     });
-    console.log(this.content);
+    return this;
   }
 
   /**
@@ -83,10 +84,14 @@ export default class Parser {
   }
 
   /**
-   * @description Get formated content.
+   * @description Get formatted content.
+   * @returns {{user_agents: "../index".Dictionary<{user_agent?: string; disallow?: string}[]>; sitemaps: [string] | undefined}}
    */
-  getFormatedContent() {
-
+  public getFormatedContent() {
+    return {
+      user_agents: _.groupBy(this.content.rules, "user_agent"),
+      sitemaps: this.content.sitemaps
+    };
   }
 
   /**
