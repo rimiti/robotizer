@@ -6,6 +6,7 @@ export default class Parser {
     rules?: [{
       user_agent?: string,
       disallow?: string,
+      allow?: string,
     }],
     sitemaps?: [string],
   } = {};
@@ -21,6 +22,8 @@ export default class Parser {
         userAgent = Utils.last(row);
       } else if (Utils.isDisallow(row)) {
         this.addDisallow(userAgent, Utils.last(row));
+      } else if (Utils.isAllow(row)) {
+        this.addAllow(userAgent, Utils.last(row));
       } else if (Utils.isSitemap(row)) {
         this.addSitemap(Utils.last(row));
       }
@@ -35,6 +38,20 @@ export default class Parser {
    */
   public addDisallow(bot: string, path: string): void {
     const item = { disallow: path, user_agent: bot };
+    if (Array.isArray(this.content.rules)) {
+      this.content.rules.push(item);
+    } else {
+      this.content.rules = [item];
+    }
+  }
+
+  /**
+   * @description Allow path for bot.
+   * @param {string} bot
+   * @param {string} path
+   */
+  public addAllow(bot: string, path: string): void {
+    const item = { allow: path, user_agent: bot };
     if (Array.isArray(this.content.rules)) {
       this.content.rules.push(item);
     } else {
@@ -74,7 +91,11 @@ export default class Parser {
     _.forIn(this.getObject().user_agents, (rules, userAgent) => {
       output += `User-Agent: ${userAgent}\n`;
       _.mapValues(rules, (paths) => {
-        output += `Disallow: ${paths.disallow}\n`;
+        if (Object.prototype.hasOwnProperty.call(paths, "disallow")) {
+          output += `Disallow: ${paths.disallow}\n`;
+        } else if (Object.prototype.hasOwnProperty.call(paths, "allow")) {
+          output += `Allow: ${paths.allow}\n`;
+        }
       });
     });
     return output;
