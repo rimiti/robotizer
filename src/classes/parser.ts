@@ -87,19 +87,11 @@ export default class Parser {
    * @description Get formatted content.
    * @returns {{user_agents: "../index".Dictionary<{user_agent?: string; disallow?: string}[]>; sitemaps: [string] | undefined}}
    */
-  public getFormatedContent() {
+  public getObject() {
     return {
       user_agents: _.groupBy(this.content.rules, "user_agent"),
       sitemaps: this.content.sitemaps
     };
-  }
-
-  /**
-   * @description Get fromated object.
-   * @returns {{rules?: [{user_agent?: string; disallow?: string}]; sitemaps?: [string]}}
-   */
-  public getContent() {
-    return this.content;
   }
 
   /**
