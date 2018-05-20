@@ -48,17 +48,7 @@ export default class Parser {
       if (Utils.isUserAgent(row)) {
         userAgent = Utils.last(row);
       } else if (Utils.isDisallow(row)) {
-        if (Array.isArray(this.content.rules)) {
-          this.content.rules.push({
-            disallow: Utils.last(row),
-            user_agent: userAgent
-          });
-        } else {
-          this.content.rules = [{
-            disallow: Utils.last(row),
-            user_agent: userAgent
-          }];
-        }
+        this.addDisallow(userAgent, Utils.last(row));
       } else if (Utils.isSitemap(row)) {
         if (Array.isArray(this.content.sitemaps)) {
           this.content.sitemaps.push(Utils.last(row));
@@ -71,21 +61,17 @@ export default class Parser {
   }
 
   /**
-   * @description Allow path for bot.
-   * @param {string} bot
-   * @param {string} path
-   */
-  allow(bot: string, path: string) {
-
-  }
-
-  /**
    * @description Disallow path for bot.
    * @param {string} bot
    * @param {string} path
    */
-  disallow(bot: string, path: string) {
-
+  addDisallow(bot: string, path: string): void {
+    const item = { disallow: path, user_agent: bot };
+    if (Array.isArray(this.content.rules)) {
+      this.content.rules.push(item);
+    } else {
+      this.content.rules = [item];
+    }
   }
 
   /**
