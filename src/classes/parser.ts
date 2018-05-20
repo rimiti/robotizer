@@ -12,7 +12,9 @@ export default class Parser {
   } = {};
 
   constructor(content?: string) {
-    if (content) this.parse(content);
+    if (content) {
+      this.parse(content);
+    }
   }
 
   /**
@@ -77,13 +79,13 @@ export default class Parser {
 
   /**
    * @description Get formatted content.
-   * @returns {{user_agents: "../index".Dictionary<{user_agent?: string; disallow?: string}[]>; sitemaps: [string] | undefined}}
+   * @returns {{ua: "../index".Dictionary<{user_agent?: string; disallow?: string}[]>; sitemaps: [string] | undefined}}
    */
   public getObject() {
-    const sorted = _.sortBy(this.content.rules, ['allow', 'disallow']);
+    const sorted = _.sortBy(this.content.rules, ["allow", "disallow"]);
     const ua = _.groupBy(sorted, "user_agent");
     return {
-      user_agents: ua,
+      ua,
       sitemaps: this.content.sitemaps
     };
   }
@@ -94,7 +96,7 @@ export default class Parser {
    */
   public getContent() {
     let output: string = "";
-    _.forIn(this.getObject().user_agents, (rules, userAgent) => {
+    _.forIn(this.getObject().ua, (rules, userAgent) => {
       output += `User-Agent: ${userAgent}\n`;
       _.mapValues(rules, (paths) => {
         if (Object.prototype.hasOwnProperty.call(paths, "disallow")) {
