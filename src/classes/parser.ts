@@ -4,14 +4,12 @@ import Utils from "./utils";
 
 export default class Parser {
   private content: {
-    user_agent?: [{
-      name?: string,
-      disallow?: [string],
+    rules?: [{
+      user_agent?: string,
+      disallow?: string,
     }],
-    sitemap?: [string],
-  } = {
-    // user_agent: {}
-  };
+    sitemaps?: [string],
+  } = {};
 
   async getFile(url: string) {
     const file = fs.createWriteStream("/tmp/robots.txt");
@@ -30,12 +28,12 @@ export default class Parser {
       "Disallow: /api/\n" +
       "Disallow: /images/site3/logos-clients/\n" +
       "User-Agent: google-bot\n" +
-      "Disallow: /map/\n" +
-      "Disallow: /404\n" +
-      "Disallow: /422\n" +
-      "Disallow: /500\n" +
-      "Disallow: /api/\n" +
-      "Disallow: /images/site3/logos-clients/\n" +
+      "Disallow: /toto/\n" +
+      "Disallow: /404-toto\n" +
+      "Disallow: /422-toto\n" +
+      "Disallow: /500-toto\n" +
+      "Disallow: /api-toto/\n" +
+      "Disallow: /images-toto/site3/logos-clients/\n" +
       "Sitemap: https://www.clicrdv.com/fr/sitemap_index1.xml\n" +
       "Sitemap: https://www.clicrdv.com/fr/sitemap_index2.xml";
   }
@@ -45,25 +43,31 @@ export default class Parser {
    */
   parse(content = this.getContent()) {
     const tmp = content.split("\n");
-    let userAgentTmp = "";
+    let userAgent = "";
     tmp.forEach((row, index) => {
       if (Utils.isUserAgent(row)) {
-        userAgentTmp = row;
-
-        // if (Array.isArray(this.content.sitemap) && this.content.user_agent) {
-        //   this.content.user_agent[Utils.last(row)].push().name =
-        // } else {
-        //
-        // }
-      } else if (Utils.isSitemap(row)) {
-        if (Array.isArray(this.content.sitemap)) {
-          this.content.sitemap.push(Utils.last(row));
+        userAgent = Utils.last(row);
+      } else if (Utils.isDisallow(row)) {
+        if (Array.isArray(this.content.rules)) {
+          this.content.rules.push({
+            disallow: Utils.last(row),
+            user_agent: userAgent
+          });
         } else {
-          this.content.sitemap = [Utils.last(row)];
+          this.content.rules = [{
+            disallow: Utils.last(row),
+            user_agent: userAgent
+          }];
+        }
+      } else if (Utils.isSitemap(row)) {
+        if (Array.isArray(this.content.sitemaps)) {
+          this.content.sitemaps.push(Utils.last(row));
+        } else {
+          this.content.sitemaps = [Utils.last(row)];
         }
       }
     });
-    console.log(JSON.stringify(this.content));
+    console.log(this.content);
   }
 
   /**
