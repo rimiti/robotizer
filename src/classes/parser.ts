@@ -11,13 +11,17 @@ export default class Parser {
     sitemaps?: [string],
   } = {};
 
+  constructor(content?: string) {
+    if (content) this.parse(content);
+  }
+
   /**
    * @description Parse existing and retrieving file.
    */
   public parse(content: string) {
     const tmp = content.split("\n");
     let userAgent = "";
-    tmp.forEach((row, index) => {
+    tmp.forEach((row) => {
       if (Utils.isUserAgent(row)) {
         userAgent = Utils.last(row);
       } else if (Utils.isDisallow(row)) {
@@ -76,8 +80,10 @@ export default class Parser {
    * @returns {{user_agents: "../index".Dictionary<{user_agent?: string; disallow?: string}[]>; sitemaps: [string] | undefined}}
    */
   public getObject() {
+    const sorted = _.sortBy(this.content.rules, ['allow', 'disallow']);
+    const ua = _.groupBy(sorted, "user_agent");
     return {
-      user_agents: _.groupBy(this.content.rules, "user_agent"),
+      user_agents: ua,
       sitemaps: this.content.sitemaps
     };
   }
