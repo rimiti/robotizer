@@ -83,7 +83,8 @@ export default class Parser {
    */
   public getObject() {
     const sorted = _.sortBy(this.content.rules, ["allow", "disallow"]);
-    const ua = _.groupBy(sorted, "user_agent");
+    const removeDuplicates = _.uniqWith(sorted, _.isEqual);
+    const ua = _.groupBy(removeDuplicates, "user_agent");
     return { ua, sitemaps: this.content.sitemaps };
   }
 
@@ -93,7 +94,8 @@ export default class Parser {
    */
   public getContent() {
     let output: string = "";
-    _.forIn(this.getObject().ua, (rules, userAgent) => {
+    const getObjectTmp = this.getObject();
+    _.forIn(getObjectTmp.ua, (rules, userAgent) => {
       output += `User-Agent: ${userAgent}\n`;
       _.mapValues(rules, (paths) => {
         if (Object.prototype.hasOwnProperty.call(paths, "disallow")) {
@@ -104,7 +106,7 @@ export default class Parser {
       });
     });
 
-    _.forEach(this.getObject().sitemaps, (url) => {
+    _.forEach(getObjectTmp.sitemaps, (url) => {
       output += `Sitemap: ${url}\n`;
     });
     return output;
