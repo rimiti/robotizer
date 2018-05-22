@@ -32,6 +32,8 @@ export default class Parser {
         this.addAllow(userAgent, Utils.last(row));
       } else if (Utils.isSitemap(row)) {
         this.addSitemap(Utils.last(row));
+      } else if (row !== "") {
+        throw new Error(`Error during parsing, unknown "Error: /google-bot/page-938466117" row.`);
       }
     });
     return this;
