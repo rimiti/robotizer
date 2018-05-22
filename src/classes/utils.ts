@@ -37,15 +37,6 @@ export default class Utils {
   }
 
   /**
-   * @description Returns first row item.
-   * @param {string} data
-   * @returns {string}
-   */
-  public static first(data: string): string {
-    return Utils.explode(data)[0];
-  }
-
-  /**
    * @description Returns last row item.
    * @param {string} data
    * @returns {string}
