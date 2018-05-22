@@ -53,20 +53,37 @@ test("Should return robots.txt content (Example 2)", (t) => {
     "Disallow: /microsoft-bot-url-to-disallow-1\n" +
     "Sitemap: https://dimsolution.com/sitemap.xml\n";
   const parser = new Parser();
-  parser.addDisallow('google-bot', '/google-bot-url-to-disallow-1');
-  parser.addDisallow('google-bot', '/google-bot-url-to-disallow-1');
-  parser.addAllow('google-bot', '/google-bot-url-to-allow-1');
-  parser.addDisallow('yahoo-bot', '/yahoo-bot-url-to-disallow-1');
-  parser.addDisallow('google-bot', '/google-bot-url-to-disallow-2');
-  parser.addSitemap('https://dimsolution.com/sitemap.xml');
-  parser.addDisallow('yahoo-bot', '/yahoo-bot-url-to-disallow-1');
-  parser.addAllow('yahoo-bot', '/yahoo-bot-url-to-allow-3');
-  parser.addDisallow('google-bot', '/google-bot-url-to-disallow-3');
-  parser.addAllow('google-bot', '/google-bot-url-to-allow-2');
-  parser.addDisallow('yahoo-bot', '/yahoo-bot-url-to-disallow-1');
-  parser.addDisallow('google-bot', '/google-bot-url-to-disallow-4');
-  parser.addAllow('google-bot', '/google-bot-url-to-allow-3');
-  parser.addDisallow('microsoft-bot', '/microsoft-bot-url-to-disallow-1');
-  parser.addDisallow('google-bot', '/google-bot-url-to-disallow-5');
+  parser.addDisallow("google-bot", "/google-bot-url-to-disallow-1");
+  parser.addDisallow("google-bot", "/google-bot-url-to-disallow-1");
+  parser.addAllow("google-bot", "/google-bot-url-to-allow-1");
+  parser.addDisallow("yahoo-bot", "/yahoo-bot-url-to-disallow-1");
+  parser.addDisallow("google-bot", "/google-bot-url-to-disallow-2");
+  parser.addSitemap("https://dimsolution.com/sitemap.xml");
+  parser.addDisallow("yahoo-bot", "/yahoo-bot-url-to-disallow-1");
+  parser.addAllow("yahoo-bot", "/yahoo-bot-url-to-allow-3");
+  parser.addDisallow("google-bot", "/google-bot-url-to-disallow-3");
+  parser.addAllow("google-bot", "/google-bot-url-to-allow-2");
+  parser.addDisallow("yahoo-bot", "/yahoo-bot-url-to-disallow-1");
+  parser.addDisallow("google-bot", "/google-bot-url-to-disallow-4");
+  parser.addAllow("google-bot", "/google-bot-url-to-allow-3");
+  parser.addDisallow("microsoft-bot", "/microsoft-bot-url-to-disallow-1");
+  parser.addDisallow("google-bot", "/google-bot-url-to-disallow-5");
   t.deepEqual(parser.getContent(), result);
+});
+
+test("Should return robots.txt content (Example 3)", (t) => {
+  const result = "User-Agent: google-bot\n" +
+    "Allow: /google-bot-url-to-allow-1\n";
+  const parser = new Parser();
+  parser.addAllow("google-bot", "/google-bot-url-to-allow-1");
+  t.deepEqual(parser.getContent(), result);
+});
+
+test("Should return robots.txt content (Example 4)", (t) => {
+  const robotsTxt = "User-Agent: *\n" +
+    "Disallow:/*/page-259352913\n" +
+    "Error: /google-bot/page-938466117\n" +
+    "Sitemap: https://dimsolution.com/sitemap1.xml\n";
+  const error = t.throws(() => new Parser(robotsTxt), Error);
+  t.is(error.message, "Error during parsing, unknown \"Error: /google-bot/page-938466117\" row.");
 });
