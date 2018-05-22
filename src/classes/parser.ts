@@ -102,7 +102,7 @@ export default class Parser {
       _.mapValues(rules, (paths) => {
         if (Object.prototype.hasOwnProperty.call(paths, "disallow")) {
           output += `Disallow: ${paths.disallow}\n`;
-        } else if (Object.prototype.hasOwnProperty.call(paths, "allow")) {
+        } else {
           output += `Allow: ${paths.allow}\n`;
         }
       });
