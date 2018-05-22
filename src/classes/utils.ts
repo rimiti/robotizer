@@ -52,10 +52,6 @@ export default class Utils {
    * @returns {string[]}
    */
   public static explode(data: string): string[] {
-    const tmp = data.split(/:(.+)/).slice(0, 2);
-    if (!/^(Sitemap|Disallow|Allow|User-agent)$/i.test(tmp[0])) {
-      throw new Error(`Error during explode, ':' missing after key: ${tmp[0]}`);
-    }
-    return tmp;
+    return data.split(/:(.+)/).slice(0, 2);
   }
 }
