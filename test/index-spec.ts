@@ -87,3 +87,14 @@ test("Should return robots.txt content (Example 4)", (t) => {
   const error = t.throws(() => new Parser(robotsTxt), Error);
   t.is(error.message, "Error during parsing, unknown \"Error: /google-bot/page-938466117\" row.");
 });
+
+test("Should return robots.txt content (Example 5)", (t) => {
+  const robotsTxt = "User-Agent: google-bot\n" +
+    "Allow: /google-bot-url-to-allow-1\n" +
+    "Disallow: /google-bot-url-to-allow-1\n";
+  const result = "User-Agent: google-bot\n" +
+    "Allow: /google-bot-url-to-allow-1\n" +
+    "Disallow: /google-bot-url-to-allow-1\n";
+  const parser = new Parser(robotsTxt);
+  t.is(parser.getContent(), result);
+});
