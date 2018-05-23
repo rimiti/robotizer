@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rimiti/robotizer.svg?branch=master)](https://travis-ci.org/rimiti/robotizer.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/rimiti/robotizer/badge.svg?branch=master)](https://coveralls.io/github/rimiti/robotizer?branch=master)
-[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT) [![Greenkeeper badge](https://badges.greenkeeper.io/rimiti/robotizer.svg)](https://greenkeeper.io/)
 
 # Using this module in other modules
 
